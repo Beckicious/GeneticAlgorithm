@@ -32,12 +32,18 @@ namespace GeneticAlgorithm
 
         public void PopulateFirstGeneration()
         {
-            Parallel.For(0, PopulationSize, (index => CurrentGeneration[index] = (InitialCreationFunction(), -1)));
+            for (int index = 0; index < PopulationSize; index++)
+            {
+                CurrentGeneration[index] = (InitialCreationFunction(), -1);
+            }
         }
 
         public void CalculateFitnessForCurrentGeneration()
         {
-            Parallel.For(0, PopulationSize, (index => CurrentGeneration[index] = (CurrentGeneration[index].Item1, CalculateFitnessFunction(CurrentGeneration[index].Item1))));
+            for (int index = 0; index < PopulationSize; index++)
+            {
+                CurrentGeneration[index] = (CurrentGeneration[index].Item1, CalculateFitnessFunction(CurrentGeneration[index].Item1));
+            }
         }
 
         public void GenerateNextGeneration()
