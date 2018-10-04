@@ -9,16 +9,13 @@ namespace GeneticAlgorithm
     class Program
     {
         private static GeneticAlgorithm<string> ga;
-        private static char[] chars = "$%#@!*abcdefghijklmnopqrstuvwxyz1234567890?;:.,ABCDEFGHIJKLMNOPQRSTUVWXYZ^& ".ToCharArray();
-        private const string Goal = "Simon Beck is a massive asshole LUL";
+        private static char[] chars = "-_$%#@!*abcdefghijklmnopqrstuvwxyz1234567890?;:.,ABCDEFGHIJKLMNOPQRSTUVWXYZ^& ".ToCharArray();
+        private const string Goal = "Some random Text with a bit of OMEGALUL and Kappa123_#Partybus";
         private static int NumOfGenes = Goal.Length;
-        private static Random rng;
 
         static void Main(string[] args)
         {
-            rng = new Random();
-
-            ga = new GeneticAlgorithm<string>(null, 0.01, 100);
+            ga = new GeneticAlgorithm<string>(0.001, 10000);
 
             ga.InitialCreationFunction = CreateNew;
             ga.CalculateFitnessFunction = CalculateFitness;
@@ -51,7 +48,7 @@ namespace GeneticAlgorithm
 
             for (int i = 0; i < NumOfGenes; i++)
             {
-                s += chars[rng.Next(chars.Length)];
+                s += chars[new ThreadSafeRandom().Next(chars.Length)];
             }
 
             return s;
@@ -78,9 +75,9 @@ namespace GeneticAlgorithm
 
             for (int i = 0; i < NumOfGenes; i++)
             {
-                double random = rng.NextDouble();
+                double random = new ThreadSafeRandom().NextDouble();
 
-                if (random < mutationRate) s += chars[rng.Next(chars.Length)];
+                if (random < mutationRate) s += chars[new ThreadSafeRandom().Next(chars.Length)];
                 else if (random < cutPoint) s += DNA1.Item1[i];
                 else s += DNA2.Item1[i];
             }
